@@ -1,0 +1,10 @@
+{
+  "name": "narrative-forge",
+  "version": "0.1.0",
+  "description": "Game narrative methodology — story architecture, dialogue craft, environmental storytelling, character building, and 2D concept art. Built on techniques from 50+ masterworks across games, film, literature, and anime.",
+  "author": {
+    "name": "wion4",
+    "email": "wion4@vk.com"
+  },
+  "keywords": ["narrative", "story", "dialogue", "gamedev", "screenplay", "worldbuilding", "concept-art"]
+}

@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Narrative Forge is available. If the current project contains game narrative files (GDD, story docs, dialogue scripts, lore documents), or if the user mentions story/narrative/dialogue/character/worldbuilding tasks, the narrative-forge skill and its agents (story-architect, dialogue-writer, world-narrator, character-builder, concept-artist) are ready to assist. Do not announce this unless relevant context is detected."
+          }
+        ]
+      }
+    ]
+  }
+}
