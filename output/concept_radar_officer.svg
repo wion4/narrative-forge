@@ -1,0 +1,577 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <!-- Sky gradient - hazy desert heat -->
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4a857"/>
+      <stop offset="40%" stop-color="#c9956e"/>
+      <stop offset="70%" stop-color="#b8845a"/>
+      <stop offset="100%" stop-color="#a07040"/>
+    </linearGradient>
+
+    <!-- Ground gradient -->
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8b7355"/>
+      <stop offset="100%" stop-color="#6b5640"/>
+    </linearGradient>
+
+    <!-- Heat haze filter -->
+    <filter id="haze">
+      <feTurbulence type="turbulence" baseFrequency="0.01 0.06" numOctaves="2" result="turb"/>
+      <feDisplacementMap in="SourceGraphic" in2="turb" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+      <feGaussianBlur stdDeviation="0.8"/>
+    </filter>
+
+    <!-- Dust/atmosphere filter -->
+    <filter id="dusty">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+
+    <!-- Far background blur -->
+    <filter id="farBlur">
+      <feGaussianBlur stdDeviation="1.5"/>
+    </filter>
+
+    <!-- Glow for sun -->
+    <filter id="sunGlow">
+      <feGaussianBlur stdDeviation="15"/>
+    </filter>
+
+    <!-- Shadow filter -->
+    <filter id="shadow">
+      <feDropShadow dx="3" dy="5" stdDeviation="3" flood-color="#4a3a2a" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Insignia glow -->
+    <filter id="insigniaGlow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Radar screen glow -->
+    <filter id="screenGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Uniform fabric pattern -->
+    <pattern id="camoPattern" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#4a5a42"/>
+      <rect x="3" y="2" width="8" height="6" rx="2" fill="#3d4d36" opacity="0.5"/>
+      <rect x="12" y="10" width="7" height="8" rx="2" fill="#56654d" opacity="0.4"/>
+      <rect x="0" y="14" width="6" height="5" rx="1" fill="#3d4d36" opacity="0.3"/>
+    </pattern>
+
+    <!-- Sand texture -->
+    <filter id="sandTexture">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+      <feBlend in="SourceGraphic" in2="gray" mode="multiply"/>
+    </filter>
+
+    <!-- Clip for annotation panel -->
+    <clipPath id="annotClip">
+      <rect x="0" y="0" width="1200" height="900"/>
+    </clipPath>
+  </defs>
+
+  <!-- ==================== BACKGROUND ==================== -->
+
+  <!-- Sky -->
+  <rect width="1200" height="900" fill="url(#sky)"/>
+
+  <!-- Sun / harsh light source - upper right -->
+  <circle cx="950" cy="80" r="60" fill="#f0d080" filter="url(#sunGlow)" opacity="0.7"/>
+  <circle cx="950" cy="80" r="25" fill="#fff8e0" opacity="0.9"/>
+
+  <!-- Atmospheric dust layer -->
+  <rect width="1200" height="900" fill="#c9956e" opacity="0.15"/>
+
+  <!-- ==================== FAR BACKGROUND - CITY RUINS ==================== -->
+  <g filter="url(#farBlur)" opacity="0.5">
+    <!-- Distant minaret / tower - damaged -->
+    <rect x="120" y="180" width="25" height="280" fill="#8a7458"/>
+    <rect x="115" y="180" width="35" height="15" fill="#7a6448"/>
+    <!-- Damage chunks missing -->
+    <rect x="130" y="220" width="15" height="30" fill="url(#sky)"/>
+
+    <!-- Distant building blocks -->
+    <rect x="200" y="300" width="80" height="160" fill="#8a7860" rx="2"/>
+    <rect x="220" y="280" width="40" height="20" fill="#7a6850"/>
+    <!-- Windows -->
+    <rect x="210" y="320" width="8" height="10" fill="#5a4a3a"/>
+    <rect x="230" y="320" width="8" height="10" fill="#5a4a3a"/>
+    <rect x="250" y="320" width="8" height="10" fill="#5a4a3a"/>
+    <rect x="210" y="350" width="8" height="10" fill="#5a4a3a"/>
+    <rect x="250" y="350" width="8" height="10" fill="#5a4a3a"/>
+    <!-- Damage - collapsed section -->
+    <polygon points="240,350 280,380 280,460 240,460" fill="url(#sky)"/>
+    <polygon points="240,350 260,365 260,380 240,370" fill="#7a6850"/>
+
+    <!-- Another distant ruin -->
+    <rect x="340" y="330" width="60" height="130" fill="#8a7a62"/>
+    <polygon points="340,330 370,300 400,330" fill="#7a6a52"/>
+    <!-- Half collapsed roof -->
+    <polygon points="370,300 400,330 400,310" fill="url(#sky)"/>
+
+    <!-- Distant dome - damaged mosque -->
+    <ellipse cx="480" cy="340" rx="40" ry="25" fill="#8a7a60"/>
+    <rect x="440" y="340" width="80" height="120" fill="#8a7a60"/>
+    <!-- Dome damage -->
+    <ellipse cx="495" cy="335" rx="15" ry="12" fill="url(#sky)"/>
+
+    <!-- Far right ruins -->
+    <rect x="900" y="280" width="70" height="180" fill="#8a7860"/>
+    <rect x="940" y="260" width="30" height="200" fill="#7a6850"/>
+    <!-- Antenna array on building - military -->
+    <line x1="955" y1="260" x2="955" y2="220" stroke="#6a5a4a" stroke-width="2"/>
+    <line x1="945" y1="230" x2="965" y2="230" stroke="#6a5a4a" stroke-width="1.5"/>
+    <line x1="948" y1="240" x2="962" y2="240" stroke="#6a5a4a" stroke-width="1"/>
+
+    <!-- Distant radar dish - broken -->
+    <rect x="1020" y="310" width="8" height="80" fill="#7a7a78"/>
+    <path d="M1005,310 Q1024,280 1043,310" fill="none" stroke="#7a7a78" stroke-width="3"/>
+    <!-- Dish partially hanging -->
+    <path d="M1035,310 Q1040,320 1050,325" fill="none" stroke="#7a7a78" stroke-width="2"/>
+  </g>
+
+  <!-- ==================== MID-GROUND - DESTROYED BUILDINGS ==================== -->
+  <g opacity="0.75">
+    <!-- Left building cluster - more detail -->
+    <rect x="30" y="350" width="120" height="250" fill="#7a6a52"/>
+    <rect x="30" y="350" width="120" height="15" fill="#6a5a42"/>
+    <!-- Windows - some blown out -->
+    <rect x="45" y="380" width="12" height="15" fill="#4a3a2a"/>
+    <rect x="75" y="380" width="12" height="15" fill="#4a3a2a"/>
+    <rect x="105" y="380" width="12" height="15" fill="#4a3a2a"/>
+    <rect x="45" y="415" width="12" height="15" fill="#4a3a2a"/>
+    <!-- Blown out window with scorch -->
+    <rect x="75" y="415" width="18" height="20" fill="#3a2a1a"/>
+    <path d="M73,435 L78,415 L93,415 L95,435" fill="#2a1a0a" opacity="0.6"/>
+    <rect x="105" y="415" width="12" height="15" fill="#4a3a2a"/>
+    <!-- Wall damage / bullet holes cluster -->
+    <circle cx="60" cy="450" r="1.5" fill="#5a4a3a"/>
+    <circle cx="64" cy="453" r="1" fill="#5a4a3a"/>
+    <circle cx="57" cy="455" r="1.5" fill="#5a4a3a"/>
+    <circle cx="62" cy="458" r="1" fill="#5a4a3a"/>
+    <!-- Rubble at base -->
+    <polygon points="30,600 50,580 80,590 120,575 150,600" fill="#6a5a42"/>
+    <ellipse cx="60" cy="595" rx="15" ry="8" fill="#7a6a50"/>
+    <ellipse cx="110" cy="590" rx="10" ry="6" fill="#6a5a40"/>
+
+    <!-- Right side - collapsed structure -->
+    <rect x="850" y="380" width="150" height="220" fill="#7a6a55"/>
+    <!-- Collapsed upper portion -->
+    <polygon points="850,380 920,340 1000,380" fill="#6a5a45"/>
+    <polygon points="920,340 1000,380 1000,360" fill="url(#sky)" opacity="0.7"/>
+    <!-- Rebar sticking out -->
+    <line x1="960" y1="365" x2="975" y2="345" stroke="#5a5a58" stroke-width="2"/>
+    <line x1="970" y1="370" x2="990" y2="355" stroke="#5a5a58" stroke-width="1.5"/>
+    <!-- Windows -->
+    <rect x="870" y="410" width="12" height="15" fill="#4a3a2a"/>
+    <rect x="900" y="410" width="12" height="15" fill="#4a3a2a"/>
+    <rect x="870" y="445" width="12" height="15" fill="#4a3a2a"/>
+    <!-- Rubble -->
+    <polygon points="850,600 880,570 950,585 1000,560 1000,600" fill="#6a5a42"/>
+
+    <!-- Destroyed vehicle - background left -->
+    <g transform="translate(180, 520)">
+      <rect x="0" y="10" width="60" height="25" rx="3" fill="#5a5a50"/>
+      <rect x="5" y="0" width="30" height="15" rx="2" fill="#4a4a40"/>
+      <!-- Burnt/damaged -->
+      <rect x="35" y="5" width="25" height="20" fill="#3a3028"/>
+      <!-- Wheels -->
+      <circle cx="12" cy="38" r="8" fill="#3a3a35"/>
+      <circle cx="48" cy="38" r="8" fill="#3a3a35"/>
+      <!-- Scorch marks -->
+      <ellipse cx="40" cy="15" rx="12" ry="8" fill="#2a2018" opacity="0.5"/>
+    </g>
+  </g>
+
+  <!-- ==================== GROUND PLANE ==================== -->
+  <rect x="0" y="560" width="1200" height="340" fill="url(#ground)"/>
+
+  <!-- Sand/dirt texture layer -->
+  <rect x="0" y="560" width="1200" height="340" fill="#a08a6a" opacity="0.3" filter="url(#sandTexture)"/>
+
+  <!-- Ground details - cracks, debris -->
+  <!-- Road / path - cracked asphalt -->
+  <path d="M0,620 Q300,610 500,630 Q700,650 900,625 Q1050,610 1200,630" fill="#5a5040" opacity="0.4"/>
+  <path d="M0,640 Q300,630 500,650 Q700,670 900,645 Q1050,630 1200,650" fill="#5a5040" opacity="0.3"/>
+
+  <!-- Cracks in ground -->
+  <path d="M350,700 L380,690 L420,705 L440,695" fill="none" stroke="#5a4a38" stroke-width="1" opacity="0.5"/>
+  <path d="M700,750 L730,740 L760,755" fill="none" stroke="#5a4a38" stroke-width="1" opacity="0.4"/>
+
+  <!-- Scattered debris -->
+  <rect x="320" y="680" width="15" height="8" rx="1" fill="#6a6058" transform="rotate(-15 327 684)" opacity="0.6"/>
+  <rect x="750" y="720" width="10" height="5" rx="1" fill="#5a5248" transform="rotate(25 755 722)" opacity="0.5"/>
+  <polygon points="680,695 690,688 700,695 695,700 685,700" fill="#7a7268" opacity="0.4"/>
+
+  <!-- Shell casings scattered -->
+  <rect x="500" y="710" width="3" height="8" rx="1" fill="#b8a848" transform="rotate(35 501 714)" opacity="0.5"/>
+  <rect x="520" y="720" width="3" height="8" rx="1" fill="#b8a848" transform="rotate(-20 521 724)" opacity="0.4"/>
+  <rect x="490" y="730" width="3" height="8" rx="1" fill="#a89838" transform="rotate(60 491 734)" opacity="0.4"/>
+
+  <!-- Sandbag barrier - right side -->
+  <g transform="translate(780, 620)">
+    <ellipse cx="0" cy="0" rx="22" ry="10" fill="#8a7a5a"/>
+    <ellipse cx="25" cy="-5" rx="22" ry="10" fill="#7a6a4a"/>
+    <ellipse cx="50" cy="0" rx="22" ry="10" fill="#8a7a5a"/>
+    <ellipse cx="12" cy="-15" rx="22" ry="10" fill="#7a6a4a"/>
+    <ellipse cx="37" cy="-18" rx="22" ry="10" fill="#8a7a55"/>
+    <ellipse cx="25" cy="-30" rx="22" ry="10" fill="#7a6a4a"/>
+  </g>
+
+  <!-- Concertina wire -->
+  <g stroke="#8a8a82" stroke-width="1" fill="none" opacity="0.5">
+    <path d="M760,600 Q770,590 780,600 Q790,610 800,600 Q810,590 820,600 Q830,610 840,600"/>
+    <path d="M765,605 Q775,595 785,605 Q795,615 805,605 Q815,595 825,605 Q835,615 845,605"/>
+  </g>
+
+  <!-- ==================== MILITARY EQUIPMENT - MID GROUND ==================== -->
+
+  <!-- Radar station / mobile command post - behind character to the right -->
+  <g transform="translate(700, 480)">
+    <!-- Vehicle body - KAMAZ-type military truck -->
+    <rect x="0" y="40" width="140" height="60" rx="3" fill="#5a6a4a"/>
+    <rect x="-10" y="30" width="50" height="40" rx="3" fill="#4a5a3a"/>
+    <!-- Windshield -->
+    <rect x="-5" y="35" width="35" height="18" rx="2" fill="#6a8090" opacity="0.5"/>
+    <!-- Equipment shelter on back -->
+    <rect x="45" y="15" width="90" height="55" rx="2" fill="#4a5a3a"/>
+    <!-- Radar mast -->
+    <rect x="85" y="-50" width="6" height="65" fill="#6a6a62"/>
+    <!-- Rotating radar antenna -->
+    <g transform="translate(88, -50)">
+      <rect x="-25" y="-3" width="50" height="6" rx="2" fill="#5a5a52"/>
+      <rect x="-20" y="-1" width="40" height="2" fill="#7a7a72"/>
+      <circle cx="0" cy="0" r="4" fill="#6a6a62"/>
+    </g>
+    <!-- Small dish antenna -->
+    <rect x="60" y="0" width="3" height="20" fill="#6a6a62"/>
+    <path d="M50,0 Q63,-15 76,0" fill="none" stroke="#6a6a62" stroke-width="2.5"/>
+    <!-- Wheels -->
+    <circle cx="15" cy="105" r="14" fill="#3a3a35"/>
+    <circle cx="15" cy="105" r="10" fill="#2a2a25"/>
+    <circle cx="85" cy="105" r="14" fill="#3a3a35"/>
+    <circle cx="85" cy="105" r="10" fill="#2a2a25"/>
+    <circle cx="115" cy="105" r="14" fill="#3a3a35"/>
+    <circle cx="115" cy="105" r="10" fill="#2a2a25"/>
+    <!-- Camo netting draped over -->
+    <path d="M40,12 Q60,5 80,10 Q100,8 135,15 L135,40 Q100,35 80,38 Q60,35 40,40 Z" fill="#5a6a42" opacity="0.4"/>
+    <path d="M42,15 L55,20 L48,35" fill="none" stroke="#4a5a32" stroke-width="1" opacity="0.4"/>
+    <path d="M75,10 L88,18 L80,33" fill="none" stroke="#4a5a32" stroke-width="1" opacity="0.4"/>
+    <!-- Cable running from truck -->
+    <path d="M45,70 Q30,80 20,95 Q10,110 -20,120" fill="none" stroke="#2a2a28" stroke-width="3"/>
+  </g>
+
+  <!-- ==================== CHARACTER - RADAR OFFICER ==================== -->
+  <g transform="translate(480, 200)" filter="url(#shadow)">
+
+    <!-- ===== FULL BODY - Standing, slightly uncertain posture ===== -->
+    <!-- She's standing with weight on one leg, tablet/device in hand, looking slightly to the side -->
+    <!-- Posture conveys: just arrived, taking it in, not yet hardened -->
+
+    <!-- HAIR - Dark brown, pulled back in regulation bun but strands loose from travel -->
+    <ellipse cx="0" cy="18" rx="22" ry="24" fill="#3a2820"/>
+    <!-- Loose strands -->
+    <path d="M-18,10 Q-22,25 -20,40" fill="none" stroke="#3a2820" stroke-width="2.5"/>
+    <path d="M-16,8 Q-24,20 -21,35" fill="none" stroke="#4a3830" stroke-width="2"/>
+    <path d="M18,12 Q22,25 19,32" fill="none" stroke="#3a2820" stroke-width="2"/>
+
+    <!-- HEAD / FACE -->
+    <ellipse cx="0" cy="20" rx="18" ry="22" fill="#d4a882"/>
+    <!-- Face shadow - sun from right -->
+    <ellipse cx="-5" cy="22" rx="12" ry="18" fill="#c49872" opacity="0.3"/>
+
+    <!-- Eyes - alert, slightly wide, looking to the right at the ruins -->
+    <ellipse cx="-6" cy="16" rx="3.5" ry="2.5" fill="#ffffff"/>
+    <ellipse cx="6" cy="16" rx="3.5" ry="2.5" fill="#ffffff"/>
+    <circle cx="-4.5" cy="16" r="2" fill="#3a5a3a"/>
+    <circle cx="7.5" cy="16" r="2" fill="#3a5a3a"/>
+    <circle cx="-4" cy="15.5" r="0.8" fill="#1a1a1a"/>
+    <circle cx="8" cy="15.5" r="0.8" fill="#1a1a1a"/>
+    <!-- Eyebrows - slightly raised, concerned -->
+    <path d="M-10,12 Q-6,10 -2,12" fill="none" stroke="#3a2820" stroke-width="1.5"/>
+    <path d="M3,12 Q7,10.5 10,13" fill="none" stroke="#3a2820" stroke-width="1.5"/>
+
+    <!-- Nose -->
+    <path d="M0,18 L-1,24 L1,24" fill="none" stroke="#b8886a" stroke-width="1"/>
+
+    <!-- Mouth - slightly parted, taking in the scene -->
+    <path d="M-4,29 Q0,31 4,29" fill="none" stroke="#a07060" stroke-width="1.5"/>
+    <path d="M-3,29 Q0,30 3,29" fill="#b07868" opacity="0.5"/>
+
+    <!-- NECK -->
+    <rect x="-6" y="38" width="12" height="14" fill="#d4a882"/>
+
+    <!-- ===== UNIFORM TOP - Clean military digital camo, officer cut ===== -->
+    <!-- Notably cleaner than everything around her -->
+
+    <!-- Torso -->
+    <path d="M-28,52 L-22,48 L22,48 L28,52 L32,130 L-32,130 Z" fill="url(#camoPattern)"/>
+    <!-- Clean uniform overlay - she's fresh from HQ -->
+    <path d="M-28,52 L-22,48 L22,48 L28,52 L32,130 L-32,130 Z" fill="#4a5a42" opacity="0.3"/>
+
+    <!-- Collar -->
+    <path d="M-14,48 L-8,42 L0,46 L8,42 L14,48" fill="none" stroke="#3a4a32" stroke-width="2"/>
+    <path d="M-14,48 L0,55 L14,48" fill="#3a4a32"/>
+
+    <!-- Shoulder boards - officer rank (lieutenant) -->
+    <rect x="-28" y="50" width="12" height="4" rx="1" fill="#4a5a3a" stroke="#8a9a72" stroke-width="0.5"/>
+    <circle cx="-24" cy="52" r="1.2" fill="#c8b860"/>
+    <circle cx="-20" cy="52" r="1.2" fill="#c8b860"/>
+    <rect x="16" y="50" width="12" height="4" rx="1" fill="#4a5a3a" stroke="#8a9a72" stroke-width="0.5"/>
+    <circle cx="20" cy="52" r="1.2" fill="#c8b860"/>
+    <circle cx="24" cy="52" r="1.2" fill="#c8b860"/>
+
+    <!-- ===== BRIGHT ACCENT - Crimson scarf/shemagh loosely around neck ===== -->
+    <!-- This is her pop of color - personal item, maybe from home -->
+    <g filter="url(#insigniaGlow)">
+      <path d="M-12,46 Q-15,55 -18,70 Q-16,72 -10,68 Q-5,60 0,52 Q5,60 10,68 Q16,72 18,70 Q15,55 12,46" fill="#c8283a" opacity="0.9"/>
+      <path d="M-12,46 Q0,50 12,46" fill="#b82030" opacity="0.8"/>
+      <!-- Scarf end hanging -->
+      <path d="M-18,70 Q-22,85 -25,100 Q-24,102 -20,98 Q-17,85 -14,72" fill="#c8283a" opacity="0.85"/>
+      <!-- Fabric folds -->
+      <path d="M-5,55 Q0,58 5,55" fill="none" stroke="#a82030" stroke-width="0.8" opacity="0.6"/>
+      <path d="M-15,62 Q-10,65 -5,60" fill="none" stroke="#a82030" stroke-width="0.8" opacity="0.5"/>
+    </g>
+
+    <!-- ===== UNIT PATCH - Radar/EW forces insignia on right sleeve ===== -->
+    <g transform="translate(25, 65)">
+      <!-- Patch background -->
+      <path d="M0,-8 L8,-4 L8,8 L0,12 L-8,8 L-8,-4 Z" fill="#1a2a4a"/>
+      <!-- Radar wave symbol -->
+      <path d="M-4,2 Q0,-5 4,2" fill="none" stroke="#40c8f0" stroke-width="1"/>
+      <path d="M-3,2 Q0,-3 3,2" fill="none" stroke="#40c8f0" stroke-width="0.8"/>
+      <circle cx="0" cy="3" r="1.5" fill="#40c8f0"/>
+      <!-- Lightning bolt -->
+      <path d="M-1,-3 L1,-1 L-0.5,0 L2,3" fill="none" stroke="#f0d040" stroke-width="0.8"/>
+    </g>
+
+    <!-- LEFT ARM - holding tablet/data pad -->
+    <path d="M-28,52 Q-38,60 -45,80 Q-48,95 -42,115 Q-38,125 -35,135" fill="url(#camoPattern)"/>
+    <path d="M-28,52 Q-38,60 -45,80 Q-48,95 -42,115 Q-38,125 -35,135" fill="#4a5a42" opacity="0.3"/>
+    <!-- Hand -->
+    <path d="M-35,133 Q-40,138 -38,142 Q-34,145 -30,140 Q-28,136 -30,133" fill="#d4a882"/>
+
+    <!-- TABLET / DATA PAD - near-future military device -->
+    <g transform="translate(-45, 118)">
+      <rect x="0" y="0" width="28" height="38" rx="2" fill="#2a2a2e"/>
+      <rect x="2" y="2" width="24" height="30" rx="1" fill="#0a2a20"/>
+      <!-- Screen content - radar display -->
+      <circle cx="14" cy="17" r="10" fill="none" stroke="#20a060" stroke-width="0.5" opacity="0.6"/>
+      <circle cx="14" cy="17" r="7" fill="none" stroke="#20a060" stroke-width="0.5" opacity="0.5"/>
+      <circle cx="14" cy="17" r="4" fill="none" stroke="#20a060" stroke-width="0.5" opacity="0.4"/>
+      <!-- Sweep line -->
+      <line x1="14" y1="17" x2="22" y2="12" stroke="#30f080" stroke-width="1" opacity="0.8"/>
+      <!-- Blips -->
+      <circle cx="18" cy="13" r="1" fill="#30f080" opacity="0.7"/>
+      <circle cx="10" cy="20" r="1" fill="#30f080" opacity="0.5"/>
+      <!-- Screen glow -->
+      <rect x="2" y="2" width="24" height="30" rx="1" fill="#20a060" opacity="0.08"/>
+      <!-- Status bar -->
+      <rect x="2" y="28" width="24" height="4" fill="#1a1a1e"/>
+      <text x="4" y="31.5" font-family="monospace" font-size="2.5" fill="#20a060" opacity="0.8">RDY</text>
+      <circle cx="22" cy="30" r="1" fill="#30f080" opacity="0.6"/>
+    </g>
+
+    <!-- RIGHT ARM - hanging at side, slightly tense -->
+    <path d="M28,52 Q35,60 38,80 Q40,100 38,120 Q36,140 34,155" fill="url(#camoPattern)"/>
+    <path d="M28,52 Q35,60 38,80 Q40,100 38,120 Q36,140 34,155" fill="#4a5a42" opacity="0.3"/>
+    <!-- Hand -->
+    <path d="M34,153 Q36,158 34,162 Q30,164 28,160 Q27,155 30,152" fill="#d4a882"/>
+
+    <!-- ===== BELT / WAIST ===== -->
+    <rect x="-30" y="126" width="60" height="6" rx="1" fill="#3a3a2a"/>
+    <!-- Belt buckle -->
+    <rect x="-4" y="126" width="8" height="6" rx="1" fill="#8a8a5a"/>
+    <!-- Holster - right hip, small sidearm -->
+    <rect x="26" y="130" width="10" height="22" rx="2" fill="#3a3028"/>
+    <rect x="27" y="130" width="8" height="5" rx="1" fill="#4a4038"/>
+    <!-- Radio on belt - left -->
+    <rect x="-32" y="128" width="7" height="15" rx="1" fill="#2a2a28"/>
+    <rect x="-31" y="129" width="5" height="3" fill="#3a5a3a"/>
+    <!-- Antenna -->
+    <line x1="-28" y1="128" x2="-26" y2="118" stroke="#2a2a28" stroke-width="1.5"/>
+
+    <!-- ===== LEGS / TROUSERS ===== -->
+    <!-- Left leg -->
+    <path d="M-28,130 L-24,220 Q-22,260 -24,300 L-30,300 Q-34,260 -32,220 L-34,130" fill="url(#camoPattern)"/>
+    <path d="M-28,130 L-24,220 Q-22,260 -24,300 L-30,300 Q-34,260 -32,220 L-34,130" fill="#4a5a42" opacity="0.25"/>
+    <!-- Right leg - weight shifted -->
+    <path d="M28,130 L30,220 Q32,260 30,300 L24,300 Q22,260 24,220 L20,130" fill="url(#camoPattern)"/>
+    <path d="M28,130 L30,220 Q32,260 30,300 L24,300 Q22,260 24,220 L20,130" fill="#4a5a42" opacity="0.25"/>
+
+    <!-- Knee pads - standard issue but pristine -->
+    <ellipse cx="-27" cy="240" rx="8" ry="12" fill="#3a3a2a"/>
+    <ellipse cx="27" cy="240" rx="8" ry="12" fill="#3a3a2a"/>
+
+    <!-- ===== BOOTS - Clean, not yet scuffed ===== -->
+    <!-- Left boot -->
+    <path d="M-34,296 L-34,320 Q-34,328 -28,328 L-16,328 Q-12,328 -12,324 L-16,296" fill="#2a2218"/>
+    <rect x="-34" y="296" width="22" height="4" fill="#3a3228"/>
+    <!-- Laces -->
+    <line x1="-30" y1="300" x2="-20" y2="300" stroke="#4a4238" stroke-width="0.5"/>
+    <line x1="-30" y1="304" x2="-20" y2="304" stroke="#4a4238" stroke-width="0.5"/>
+
+    <!-- Right boot -->
+    <path d="M18,296 L18,320 Q18,328 24,328 L36,328 Q40,328 40,324 L36,296" fill="#2a2218"/>
+    <rect x="18" y="296" width="22" height="4" fill="#3a3228"/>
+    <line x1="22" y1="300" x2="32" y2="300" stroke="#4a4238" stroke-width="0.5"/>
+    <line x1="22" y1="304" x2="32" y2="304" stroke="#4a4238" stroke-width="0.5"/>
+
+    <!-- ===== EQUIPMENT - Headset around neck (radar operator) ===== -->
+    <path d="M-14,38 Q-18,28 -16,18 Q-14,10 0,8 Q14,10 16,18 Q18,28 14,38" fill="none" stroke="#2a2a2a" stroke-width="3"/>
+    <!-- Ear cups pushed down to neck level -->
+    <ellipse cx="-14" cy="40" rx="5" ry="6" fill="#2a2a2a"/>
+    <ellipse cx="-14" cy="40" rx="3" ry="4" fill="#3a3a38"/>
+    <ellipse cx="14" cy="40" rx="5" ry="6" fill="#2a2a2a"/>
+    <ellipse cx="14" cy="40" rx="3" ry="4" fill="#3a3a38"/>
+    <!-- Mic boom -->
+    <path d="M-14,43 Q-18,46 -12,48" fill="none" stroke="#2a2a2a" stroke-width="1.5"/>
+    <circle cx="-12" cy="48" r="2" fill="#2a2a2a"/>
+
+    <!-- ===== GEAR - Backpack/bag (just arrived) ===== -->
+    <!-- Duffel bag on ground beside her -->
+  </g>
+
+  <!-- Duffel bag on ground - she just arrived -->
+  <g transform="translate(540, 700)">
+    <ellipse cx="0" cy="0" rx="35" ry="14" fill="#4a5a3a"/>
+    <rect x="-35" y="-12" width="70" height="14" rx="8" fill="#3a4a2a"/>
+    <!-- Strap -->
+    <path d="M-20,-12 Q-15,-20 0,-18 Q15,-20 20,-12" fill="none" stroke="#3a3a2a" stroke-width="2"/>
+    <!-- Label/tag -->
+    <rect x="15" y="-8" width="12" height="8" fill="#c8c0a8"/>
+    <text x="17" y="-2" font-family="monospace" font-size="3" fill="#3a3a3a">PBO</text>
+  </g>
+
+  <!-- ==================== FOREGROUND ELEMENTS ==================== -->
+
+  <!-- Dust particles in air -->
+  <g opacity="0.3">
+    <circle cx="100" cy="400" r="1.5" fill="#c8b890"/>
+    <circle cx="300" cy="350" r="1" fill="#c8b890"/>
+    <circle cx="550" cy="300" r="1.5" fill="#c8b890"/>
+    <circle cx="700" cy="280" r="1" fill="#c8b890"/>
+    <circle cx="900" cy="320" r="1.5" fill="#c8b890"/>
+    <circle cx="150" cy="500" r="2" fill="#c8b890"/>
+    <circle cx="400" cy="450" r="1.5" fill="#c8b890"/>
+    <circle cx="650" cy="380" r="1" fill="#c8b890"/>
+    <circle cx="1050" cy="400" r="1.5" fill="#c8b890"/>
+    <circle cx="250" cy="600" r="2" fill="#c8b890"/>
+    <circle cx="450" cy="550" r="1" fill="#c8b890"/>
+    <circle cx="1100" cy="500" r="1.5" fill="#c8b890"/>
+  </g>
+
+  <!-- Atmospheric overlay - heat/dust -->
+  <rect width="1200" height="900" fill="#c8a868" opacity="0.08"/>
+
+  <!-- ==================== ANNOTATIONS (Russian) ==================== -->
+  <g class="annotations" font-family="'Courier New', monospace" fill="#e8e0d0">
+
+    <!-- Title -->
+    <text x="30" y="40" font-size="22" font-weight="bold" fill="#e8dcc8" letter-spacing="3">
+      КОНЦЕПТ-АРТ: ОПЕРАТОР РЛС
+    </text>
+    <text x="30" y="60" font-size="12" fill="#c8b898" letter-spacing="1">
+      Ближнее будущее / Пустынный фронт / Серия: "Песчаный рубеж"
+    </text>
+    <line x1="30" y1="68" x2="520" y2="68" stroke="#c8b898" stroke-width="0.5" opacity="0.5"/>
+
+    <!-- Character name plate -->
+    <g transform="translate(30, 780)">
+      <rect x="0" y="0" width="280" height="70" rx="2" fill="#1a1a18" opacity="0.7"/>
+      <rect x="0" y="0" width="4" height="70" fill="#c8283a"/>
+      <text x="15" y="22" font-size="16" font-weight="bold" fill="#e8dcc8">
+        Лт. СОКОЛОВА Алина Д.
+      </text>
+      <text x="15" y="40" font-size="10" fill="#a89878">
+        83-й отд. радиотехнический батальон
+      </text>
+      <text x="15" y="55" font-size="9" fill="#888068">
+        Должность: оператор РЛС ПВО / Звание: лейтенант
+      </text>
+      <text x="15" y="66" font-size="8" fill="#686050">
+        Первое назначение на передовую. Прибыла из штаба округа.
+      </text>
+    </g>
+
+    <!-- Annotation lines pointing to details -->
+
+    <!-- Headset annotation -->
+    <line x1="430" y1="240" x2="350" y2="200" stroke="#a89070" stroke-width="0.5" stroke-dasharray="3,3"/>
+    <text x="290" y="195" font-size="9" fill="#c8b898">Гарнитура связи Р-168</text>
+    <text x="290" y="207" font-size="7" fill="#a89070">(новая, без следов износа)</text>
+
+    <!-- Scarf annotation -->
+    <line x1="458" y1="262" x2="370" y2="280" stroke="#a89070" stroke-width="0.5" stroke-dasharray="3,3"/>
+    <text x="280" y="278" font-size="9" fill="#c8283a">Алый шарф - личная вещь</text>
+    <text x="280" y="290" font-size="7" fill="#a89070">(подарок; единственный яркий акцент)</text>
+
+    <!-- Insignia annotation -->
+    <line x1="512" y1="268" x2="580" y2="250" stroke="#a89070" stroke-width="0.5" stroke-dasharray="3,3"/>
+    <text x="585" y="248" font-size="9" fill="#40c8f0">Нашивка РТВ ВКС</text>
+    <text x="585" y="260" font-size="7" fill="#a89070">(радиотехнические войска)</text>
+
+    <!-- Tablet annotation -->
+    <line x1="432" y1="335" x2="350" y2="360" stroke="#a89070" stroke-width="0.5" stroke-dasharray="3,3"/>
+    <text x="240" y="358" font-size="9" fill="#20a060">Планшет ТПК "Барнаул-Т"</text>
+    <text x="240" y="370" font-size="7" fill="#a89070">(портативный терминал ПВО)</text>
+
+    <!-- Clean boots annotation -->
+    <line x1="500" y1="520" x2="580" y2="540" stroke="#a89070" stroke-width="0.5" stroke-dasharray="3,3"/>
+    <text x="585" y="538" font-size="9" fill="#c8b898">Чистые берцы</text>
+    <text x="585" y="550" font-size="7" fill="#a89070">(контраст с окружением - только прибыла)</text>
+
+    <!-- Radar truck annotation -->
+    <line x1="770" y1="440" x2="850" y2="420" stroke="#a89070" stroke-width="0.5" stroke-dasharray="3,3"/>
+    <text x="855" y="418" font-size="9" fill="#c8b898">МРЛС "Небо-М" (мобильная)</text>
+    <text x="855" y="430" font-size="7" fill="#a89070">(её рабочее место на передовой)</text>
+
+    <!-- Destroyed vehicle annotation -->
+    <line x1="210" y1="535" x2="170" y2="510" stroke="#a89070" stroke-width="0.5" stroke-dasharray="3,3"/>
+    <text x="70" y="508" font-size="9" fill="#a89070">Сгоревший БТР</text>
+    <text x="70" y="520" font-size="7" fill="#888068">(реальность фронта)</text>
+
+    <!-- Environment note - top right -->
+    <g transform="translate(920, 750)">
+      <rect x="0" y="0" width="250" height="85" rx="2" fill="#1a1a18" opacity="0.7"/>
+      <rect x="246" y="0" width="4" height="85" fill="#d4a857"/>
+      <text x="10" y="18" font-size="10" font-weight="bold" fill="#d4a857">СРЕДА:</text>
+      <text x="10" y="32" font-size="8" fill="#a89878">Пустынный город. Ближний восток или</text>
+      <text x="10" y="44" font-size="8" fill="#a89878">Центральная Азия. Температура +42C.</text>
+      <text x="10" y="56" font-size="8" fill="#a89878">Фронт проходит через жилые кварталы.</text>
+      <text x="10" y="68" font-size="8" fill="#a89878">Пыль, жара, разрушения. Постоянная</text>
+      <text x="10" y="80" font-size="8" fill="#a89878">угроза воздушного удара.</text>
+    </g>
+
+    <!-- Color palette display -->
+    <g transform="translate(920, 690)">
+      <text x="0" y="0" font-size="8" fill="#a89878">ПАЛИТРА:</text>
+      <rect x="55" y="-8" width="18" height="12" rx="1" fill="#d4a857"/>
+      <rect x="77" y="-8" width="18" height="12" rx="1" fill="#8b7355"/>
+      <rect x="99" y="-8" width="18" height="12" rx="1" fill="#4a5a42"/>
+      <rect x="121" y="-8" width="18" height="12" rx="1" fill="#c8283a"/>
+      <rect x="143" y="-8" width="18" height="12" rx="1" fill="#40c8f0"/>
+      <rect x="165" y="-8" width="18" height="12" rx="1" fill="#2a2218"/>
+    </g>
+
+  </g>
+
+  <!-- Vignette overlay -->
+  <rect width="1200" height="900" fill="url(#sky)" opacity="0" />
+  <!-- Dark edges -->
+  <rect x="0" y="0" width="1200" height="60" fill="#1a1008" opacity="0.3"/>
+  <rect x="0" y="840" width="1200" height="60" fill="#1a1008" opacity="0.4"/>
+  <rect x="0" y="0" width="40" height="900" fill="#1a1008" opacity="0.2"/>
+  <rect x="1160" y="0" width="40" height="900" fill="#1a1008" opacity="0.2"/>
+
+</svg>

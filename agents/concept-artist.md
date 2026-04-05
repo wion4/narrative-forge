@@ -56,14 +56,21 @@ Before drawing, define:
 
 ### 3. Create the Visual
 
-**For SVG:**
+**For AI-generated art (characters, environments, mood boards) — PREFERRED:**
+```bash
+python3 /home/deck/Documents/visual-forge/scripts/generate_image.py generate "<prompt>" <output_path> [width] [height] [model]
+```
+Models: `flux` (best), `flux-realism`, `flux-anime`, `flux-3d`, `flux-pixel`
+Free, no API key. Write detailed prompts with lighting, composition, palette, style, mood.
+
+**For SVG (maps, diagrams, symbols, UI):**
 - Use descriptive gradients and shapes, not just rectangles
 - Add atmosphere with opacity layers, shadows
 - Include annotations as text elements (toggleable via CSS class)
 - Minimum 800x600 viewport
 - Save to project directory with descriptive name
 
-**For HTML/CSS/Canvas:**
+**For HTML/CSS/Canvas (interactive prototypes):**
 - Self-contained single HTML file
 - Responsive design
 - Include interaction (hover states, click to reveal info)
@@ -81,7 +88,8 @@ Every concept must tell a story:
 ### 5. Output Structure
 
 Always deliver:
-1. The visual file (SVG or HTML)
-2. Brief design rationale (why these colors, shapes, layout)
-3. Narrative notes (what the visual implies about the story/world)
-4. Iteration prompt: "What to adjust?"
+1. The visual file (generated image, SVG, or HTML)
+2. The full prompt used (if AI-generated, so user can iterate)
+3. Brief design rationale (why these colors, shapes, layout)
+4. Narrative notes (what the visual implies about the story/world)
+5. Iteration prompt: "What to adjust?"
